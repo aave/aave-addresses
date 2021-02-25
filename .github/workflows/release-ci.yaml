@@ -17,6 +17,8 @@ jobs:
         run: |
           npm install
           npm run build
+        env:
+          ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.0.0
