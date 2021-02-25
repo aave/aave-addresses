@@ -24,7 +24,7 @@ jobs:
           npm run build
         env:
           ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}
-          TEST_ENV: "test_env_12345"
+          TEST_ENV: ${{ secrets.TEST_ENV }}
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.0.0
