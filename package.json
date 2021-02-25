@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "env-cmd ts-node ./src/index.ts"
+    "dev": "env-cmd npm run build",
+    "build": "ts-node ./src/index.ts"
   },
   "dependencies": {
-    "bignumber.js": "^9.0.1",
-    "env-cmd": "^10.1.0"
+    "bignumber.js": "^9.0.1"
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "@typechain/ethers-v5": "^5.0.0",
     "@types/node": "^12.7.5",
     "@typescript-eslint/eslint-plugin": "^4.14.2",
@@ -23,7 +24,6 @@
     "ethers": "^5.0.24",
     "husky": "^4.3.8",
     "lint-staged": "^10.5.4",
-    "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
     "ts-generator": "^0.1.1",
     "ts-node": "^9.1.1",
