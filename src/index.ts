@@ -3,6 +3,7 @@ import * as path from "path";
 import { providers } from "ethers";
 import { AaveProtocolDataProviderFactory } from "./contracts/AaveProtocolDataProviderFactory";
 
+console.log(" TEST_ENV: ", process.env.TEST_ENV);
 // Get the main addreses from the DOC's https://docs.aave.com/developers/getting-started/deployed-contracts
 const NETWORKS_CONFIG = [
   {

@@ -13,12 +13,18 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v2.3.1
 
+      - name: Use Node 13.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13.x
+
       - name: Install and Build 🔧
-        env:
-          ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}
         run: |
           npm install
           npm run build
+        env:
+          ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}
+          TEST_ENV: "test_env_12345"
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.0.0
