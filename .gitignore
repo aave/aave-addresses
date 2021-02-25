@@ -1,0 +1,10 @@
+*.log
+.DS_Store
+node_modules
+dist
+.env
+.idea
+artifacts
+cache
+**/__pycache__
+public/*.json
