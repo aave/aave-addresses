@@ -9,6 +9,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      ALCHEMY_KEY: secrets.ALCHEMY_KEY
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2.3.1
@@ -22,9 +24,6 @@ jobs:
         run: |
           npm install
           npm run build
-        env:
-          ALCHEMY_KEY: "${{ secrets.ALCHEMY_KEY }}"
-          TEST_ENV: "${{ secrets.TEST_ENV }}"
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.0.0

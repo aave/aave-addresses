@@ -2,18 +2,17 @@ import * as fs from "fs";
 import * as path from "path";
 import { providers } from "ethers";
 import { AaveProtocolDataProviderFactory } from "./contracts/AaveProtocolDataProviderFactory";
-
-console.log(" TEST_ENV: ", process.env.TEST_ENV);
+const KEY = process.env.ALCHEMY_KEY;
 // Get the main addreses from the DOC's https://docs.aave.com/developers/getting-started/deployed-contracts
 const NETWORKS_CONFIG = [
   {
     network: "mainnet",
-    nodeUrl: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_KEY}`,
+    nodeUrl: `https://eth-mainnet.alchemyapi.io/v2/${KEY}`,
     protocolDataProviderAddress: "0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d",
   },
   {
     network: "kovan",
-    nodeUrl: `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMY_KEY}`,
+    nodeUrl: `https://eth-kovan.alchemyapi.io/v2/${KEY}`,
     protocolDataProviderAddress: "0x3c73a5e5785cac854d468f727c606c07488a29d6",
   },
 ];
