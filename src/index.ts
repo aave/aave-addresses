@@ -3,6 +3,7 @@ import * as path from "path";
 import { providers } from "ethers";
 import { AaveProtocolDataProviderFactory } from "./contracts/AaveProtocolDataProviderFactory";
 const KEY = process.env.ALCHEMY_KEY;
+if (KEY === "") throw new Error("ENV ALCHEMY KEY not configured");
 // Get the main addreses from the DOC's https://docs.aave.com/developers/getting-started/deployed-contracts
 const NETWORKS_CONFIG = [
   {
