@@ -1,6 +1,8 @@
 name: release-ci
 
 on:
+  schedule:
+    - cron: "0 0 * * *" # At the end of every day
   push:
     branches:
       - main
