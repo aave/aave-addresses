@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "env-cmd npm run build",
-    "build": "env-cmd ts-node ./src/index.ts"
+    "build": "ts-node ./src/index.ts"
   },
   "dependencies": {
     "bignumber.js": "^9.0.1"
