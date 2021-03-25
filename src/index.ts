@@ -5,25 +5,36 @@ import { AaveProtocolDataProviderFactory } from "./contracts/AaveProtocolDataPro
 const KEY = process.env.ALCHEMY_KEY;
 if (KEY === "") throw new Error("ENV ALCHEMY KEY not configured");
 // Get the main addreses from the DOC's https://docs.aave.com/developers/getting-started/deployed-contracts
-const NETWORKS_CONFIG = [
-  {
-    network: "mainnet",
-    nodeUrl: `https://eth-mainnet.alchemyapi.io/v2/${KEY}`,
-    protocolDataProviderAddress: "0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d",
-  },
-  {
-    network: "kovan",
-    nodeUrl: `https://eth-kovan.alchemyapi.io/v2/${KEY}`,
-    protocolDataProviderAddress: "0x3c73a5e5785cac854d468f727c606c07488a29d6",
-  },
-];
+const NETWORKS_CONFIG = {
+  mainnet: [
+    {
+      market: "aave-v2",
+      nodeUrl: `https://eth-mainnet.alchemyapi.io/v2/${KEY}`,
+      protocolDataProviderAddress: "0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d",
+    },
+    {
+      market: "aave-amm",
+      nodeUrl: `https://eth-mainnet.alchemyapi.io/v2/${KEY}`,
+      protocolDataProviderAddress: "0xc443ad9dde3cecfb9dfc5736578f447afe3590ba",
+    },
+  ],
+  kovan: [
+    {
+      market: "aave-v2",
+      nodeUrl: `https://eth-kovan.alchemyapi.io/v2/${KEY}`,
+      protocolDataProviderAddress: "0x3c73a5e5785cac854d468f727c606c07488a29d6",
+    },
+  ],
+};
 
 (async () => {
   const generateTokensData = async (
     network: string,
     nodeUrl: string,
+    market: string,
     protocolDataProviderAddress: string
   ) => {
+    console.log("NET: ", network, " market: ", market, " URL : ", nodeUrl);
     const provider = new providers.JsonRpcProvider(nodeUrl);
     const helperContract = AaveProtocolDataProviderFactory.connect(
       protocolDataProviderAddress,
@@ -58,22 +69,29 @@ const NETWORKS_CONFIG = [
       });
 
       const result = await Promise.all(promises);
-
-      fs.writeFileSync(
-        path.join(__dirname, `../public/${network}.json`),
-        JSON.stringify(result)
-      );
-      console.log(`Success generate data for ${network}`);
+      console.log(`Success generate data for ${market}-${network}`);
+      return { [market]: result };
     } catch (error) {
       console.error(`Error network : ${network}`, error);
+      return null;
     }
   };
 
-  for (const config of NETWORKS_CONFIG) {
-    await generateTokensData(
-      config.network,
-      config.nodeUrl,
-      config.protocolDataProviderAddress
+  for (const network of Object.keys(NETWORKS_CONFIG)) {
+    const data = await Promise.all(
+      NETWORKS_CONFIG[network].map((config) => {
+        return generateTokensData(
+          network,
+          config.nodeUrl,
+          config.market,
+          config.protocolDataProviderAddress
+        );
+      })
+    );
+
+    fs.writeFileSync(
+      path.join(__dirname, `../public/${network}.json`),
+      JSON.stringify(data)
     );
   }
 })();
