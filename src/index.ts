@@ -5,27 +5,28 @@ import { AaveProtocolDataProviderFactory } from "./contracts/AaveProtocolDataPro
 const KEY = process.env.ALCHEMY_KEY;
 if (KEY === "") throw new Error("ENV ALCHEMY KEY not configured");
 // Get the main addreses from the DOC's https://docs.aave.com/developers/getting-started/deployed-contracts
+
 const NETWORKS_CONFIG = {
   mainnet: [
     {
-      market: "aave-v2",
+      market: "proto",
       nodeUrl: `https://eth-mainnet.alchemyapi.io/v2/${KEY}`,
       protocolDataProviderAddress: "0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d",
     },
     {
-      market: "aave-amm",
+      market: "amm",
       nodeUrl: `https://eth-mainnet.alchemyapi.io/v2/${KEY}`,
       protocolDataProviderAddress: "0xc443ad9dde3cecfb9dfc5736578f447afe3590ba",
     },
   ],
   kovan: [
     {
-      market: "aave-v2",
+      market: "proto",
       nodeUrl: `https://eth-kovan.alchemyapi.io/v2/${KEY}`,
       protocolDataProviderAddress: "0x3c73a5e5785cac854d468f727c606c07488a29d6",
     },
   ],
-};
+} as const;
 
 (async () => {
   const generateTokensData = async (
@@ -77,7 +78,10 @@ const NETWORKS_CONFIG = {
     }
   };
 
-  for (const network of Object.keys(NETWORKS_CONFIG)) {
+  for (const network of Object.keys(NETWORKS_CONFIG) as (
+    | "mainnet"
+    | "kovan"
+  )[]) {
     const data = await Promise.all(
       NETWORKS_CONFIG[network].map((config) => {
         return generateTokensData(
@@ -91,7 +95,7 @@ const NETWORKS_CONFIG = {
 
     fs.writeFileSync(
       path.join(__dirname, `../public/${network}.json`),
-      JSON.stringify(data)
+      JSON.stringify(data.reduce((acc, market) => ({ ...acc, ...market }), {}))
     );
   }
 })();
