@@ -33,7 +33,6 @@ const NETWORKS_CONFIG = {
       protocolDataProviderAddress: "0x7551b5D2763519d4e37e8B81929D336De671d46d",
     },
   ],
-};
 } as const;
 
 (async () => {
