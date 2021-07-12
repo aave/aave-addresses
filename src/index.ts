@@ -26,6 +26,13 @@ const NETWORKS_CONFIG = {
       protocolDataProviderAddress: "0x3c73a5e5785cac854d468f727c606c07488a29d6",
     },
   ],
+  matic: [
+    {
+      market: "matic",
+      nodeUrl: `https://rpc-mainnet.matic.network`,
+      protocolDataProviderAddress: "0x7551b5D2763519d4e37e8B81929D336De671d46d",
+    },
+  ],
 } as const;
 
 (async () => {
