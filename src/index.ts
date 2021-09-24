@@ -3,7 +3,13 @@ import * as path from "path";
 import { providers } from "ethers";
 import { AaveProtocolDataProviderFactory } from "./contracts/AaveProtocolDataProviderFactory";
 const KEY = process.env.ALCHEMY_KEY;
-if (KEY === "") throw new Error("ENV ALCHEMY KEY not configured");
+const POLYGON_ALCHEMY_KEY = process.env.POLYGON_ALCHEMY_KEY;
+const MUMBAI_ALCHEMY_KEY = process.env.MUMBAI_ALCHEMY_KEY;
+if (KEY === "" || !KEY) throw new Error("ENV ALCHEMY KEY not configured");
+if (POLYGON_ALCHEMY_KEY === "" || !POLYGON_ALCHEMY_KEY)
+  throw new Error("POLYGON_ALCHEMY_KEY ALCHEMY KEY not configured");
+if (MUMBAI_ALCHEMY_KEY === "" || !MUMBAI_ALCHEMY_KEY)
+  throw new Error("MUMBAI_ALCHEMY_KEY ALCHEMY KEY not configured");
 // Get the main addreses from the DOC's https://docs.aave.com/developers/getting-started/deployed-contracts
 
 const NETWORKS_CONFIG = {
@@ -26,11 +32,18 @@ const NETWORKS_CONFIG = {
       protocolDataProviderAddress: "0x3c73a5e5785cac854d468f727c606c07488a29d6",
     },
   ],
-  matic: [
+  polygon: [
     {
       market: "matic",
-      nodeUrl: `https://rpc-mainnet.matic.network`,
+      nodeUrl: `https://polygon-mainnet.g.alchemy.com/v2/${POLYGON_ALCHEMY_KEY}`,
       protocolDataProviderAddress: "0x7551b5D2763519d4e37e8B81929D336De671d46d",
+    },
+  ],
+  mumbai: [
+    {
+      market: "matic",
+      nodeUrl: `https://polygon-mumbai.g.alchemy.com/v2/${MUMBAI_ALCHEMY_KEY}`,
+      protocolDataProviderAddress: "0xFA3bD19110d986c5e5E9DD5F69362d05035D045B",
     },
   ],
 } as const;
