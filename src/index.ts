@@ -5,15 +5,11 @@ import { AaveProtocolDataProviderFactory } from "./contracts/AaveProtocolDataPro
 const KEY = process.env.ALCHEMY_KEY;
 const POLYGON_ALCHEMY_KEY = process.env.POLYGON_ALCHEMY_KEY;
 const MUMBAI_ALCHEMY_KEY = process.env.MUMBAI_ALCHEMY_KEY;
-if (
-  KEY === "" ||
-  MUMBAI_ALCHEMY_KEY === "" ||
-  POLYGON_ALCHEMY_KEY === "" ||
-  !KEY ||
-  !MUMBAI_ALCHEMY_KEY ||
-  !POLYGON_ALCHEMY_KEY
-)
-  throw new Error("ENV ALCHEMY KEY not configured");
+if (KEY === "" || !KEY) throw new Error("ENV ALCHEMY KEY not configured");
+if (POLYGON_ALCHEMY_KEY === "" || !POLYGON_ALCHEMY_KEY)
+  throw new Error("POLYGON_ALCHEMY_KEY ALCHEMY KEY not configured");
+if (MUMBAI_ALCHEMY_KEY === "" || !MUMBAI_ALCHEMY_KEY)
+  throw new Error("MUMBAI_ALCHEMY_KEY ALCHEMY KEY not configured");
 // Get the main addreses from the DOC's https://docs.aave.com/developers/getting-started/deployed-contracts
 
 const NETWORKS_CONFIG = {
