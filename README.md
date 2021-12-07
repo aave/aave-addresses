@@ -6,4 +6,4 @@
 # MAINNET
 
 
-# MATTIC
+# POLYGON
